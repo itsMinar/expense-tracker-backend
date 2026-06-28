@@ -1,0 +1,53 @@
+{
+  "name": "trackr-backend",
+  "version": "1.0.0",
+  "description": "Trackr - Smart Expense Tracker API. Production-ready Node.js + Express + MongoDB backend with JWT authentication, RESTful APIs, and analytics.",
+  "main": "src/index.js",
+  "keywords": [
+    "expense-tracker",
+    "finance",
+    "budget",
+    "api",
+    "nodejs",
+    "expressjs",
+    "mongodb",
+    "mongoose",
+    "jwt",
+    "authentication"
+  ],
+  "author": {
+    "name": "Md. Minar Munshi",
+    "url": "https://github.com/itsMinar",
+    "email": "minarmunshi46@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsMinar/expense-tracker-backend"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "db:seed": "node src/db/seeder.js",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.1",
+    "winston": "^3.17.0",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
+  }
+}
