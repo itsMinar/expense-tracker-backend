@@ -14,7 +14,7 @@ const {
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
 };
 
 const register = asyncHandler(async (req, res) => {
@@ -32,7 +32,7 @@ const register = asyncHandler(async (req, res) => {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .json(new ApiResponse(201, { user }, 'Account created successfully'));
+    .json(new ApiResponse(201, { user, accessToken, refreshToken }, 'Account created successfully'));
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -50,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .json(new ApiResponse(200, { user }, 'Login successful'));
+    .json(new ApiResponse(200, { user, accessToken, refreshToken }, 'Login successful'));
 });
 
 const logout = asyncHandler(async (_req, res) => {
@@ -58,8 +58,8 @@ const logout = asyncHandler(async (_req, res) => {
 
   res
     .status(200)
-    .clearCookie('accessToken')
-    .clearCookie('refreshToken')
+    .clearCookie('accessToken', { ...cookieOptions })
+    .clearCookie('refreshToken', { ...cookieOptions })
     .json(new ApiResponse(200, null, 'Logged out successfully'));
 });
 
@@ -80,7 +80,7 @@ const refresh = asyncHandler(async (req, res) => {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .json(new ApiResponse(200, { accessToken }, 'Token refreshed'));
+    .json(new ApiResponse(200, { accessToken, refreshToken }, 'Token refreshed'));
 });
 
 const getMe = asyncHandler(async (req, res) => {
@@ -134,8 +134,8 @@ const deleteAccount = asyncHandler(async (req, res) => {
   await authService.deleteUserAccount(req.user._id);
   res
     .status(200)
-    .clearCookie('accessToken')
-    .clearCookie('refreshToken')
+    .clearCookie('accessToken', { ...cookieOptions })
+    .clearCookie('refreshToken', { ...cookieOptions })
     .json(new ApiResponse(200, null, 'Account deleted successfully'));
 });
 
