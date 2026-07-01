@@ -1,4 +1,3 @@
-const { createServer } = require('http');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -10,7 +9,6 @@ const errorMiddleware = require('../middlewares/error.middleware.js');
 const { CORS_ORIGIN } = require('../config/env.js');
 
 const app = express();
-const httpServer = createServer(app);
 
 app.use(helmet());
 app.use(
@@ -38,7 +36,9 @@ app.use((req, _res, next) => {
   if (req.body) req.body = sanitize(req.body);
   if (req.params) {
     const clean = sanitize(req.params);
-    Object.keys(clean).forEach((k) => { req.params[k] = clean[k]; });
+    Object.keys(clean).forEach((k) => {
+      req.params[k] = clean[k];
+    });
   }
   next();
 });
@@ -80,4 +80,4 @@ app.use((_req, res) => {
 
 app.use(errorMiddleware);
 
-module.exports = { httpServer };
+module.exports = { httpServer: app };
