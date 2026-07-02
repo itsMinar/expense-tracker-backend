@@ -10,6 +10,7 @@ const registerSchema = z.object({
     .string()
     .min(6, 'Password must be at least 6 characters')
     .max(128, 'Password must be at most 128 characters'),
+  currency: z.string().optional(),
 });
 
 const loginSchema = z.object({
@@ -33,6 +34,7 @@ const updateProfileSchema = z.object({
     .optional(),
   email: z.string().email('Invalid email address').optional(),
   avatar: z.string().optional(),
+  currency: z.string().optional(),
 });
 
 const forgotPasswordSchema = z.object({

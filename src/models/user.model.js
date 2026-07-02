@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    currency: {
+      type: String,
+      default: 'USD',
+    },
     refreshToken: {
       type: String,
       select: false,
